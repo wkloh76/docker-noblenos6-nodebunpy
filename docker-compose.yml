@@ -1,0 +1,32 @@
+services:
+  nodebun-build:
+    image: "${IMG}:${TAG}-${ARG1}"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        NODE_VERSION: "${TAG}"
+        BUN_VERSION: "${ARG1}"
+  nodebun_deploy:
+    image: "${IMG}:${TAG}-${ARG1}"
+    container_name: nodebun_deploy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kuala_Lumpur
+      - RUN_MODE=debug # debug or production
+      - RUN_ENGINE=webnodejs # webnodejs
+      - USER_PASSWORD=test1234 # Allow to change
+      - USER_NAME=test # Allow to change
+      # - PYVENV=YES # Active python virtual environment service
+      - INTERPRETER=node # Change runtime engine such as python3,nodejs and bun, default is bun
+      # - MAIN_APP=app.js
+      # - SYNO=true
+
+    # volumes:
+    #   - ./testapp/app:/app  # The source code point to /app directory
+    working_dir: /app
+    ports:
+      - 9820-9821:3000-3001
+    shm_size: "2gb"
+    restart: unless-stopped
