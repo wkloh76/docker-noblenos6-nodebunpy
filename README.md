@@ -1,15 +1,16 @@
-# Docker Deploy NodeBunPy
+# Docker Deploy Noble NodeBunPy
 
 ![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
-![Static Badge](https://img.shields.io/badge/NodeJS-V20_.19_.4-_)
-![Static Badge](https://img.shields.io/badge/BunJS-V1_.2_.20-_)
+![Static Badge](https://img.shields.io/badge/NodeJS-V20_.19_.5-_)
+![Static Badge](https://img.shields.io/badge/BunJS-V1_.2_.21-_)
 ![Static Badge](https://img.shields.io/badge/ElectronJS-V34_.2_.0-_)
 ![Static Badge](https://img.shields.io/badge/Python3-Latest-__?style=flat)
 ![Static Badge](https://img.shields.io/badge/OS-Ubunut_24.04-_?style=flat)
 
 ## Objectvie
 
-- Design docker images which will able deploy the project in `NodeJS` , `BunJS` or `Python3` design.
+- Design docker images which will able deploy the project in `NodeJS` , `BunJS` or `Python3` design in root access only.
+- use none s6-overlay method and purely use docker-entrypoint method to manage the service.
 - Project framework can be OricommJS or OricommJS_v2 which backend and frontend render html statement to browser. You can use other framework to support your project but the `docker-compose.yml` need to change a little bit.
 
 - The docker-compose files combine both build and up containers feature in one files.

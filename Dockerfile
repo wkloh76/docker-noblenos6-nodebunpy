@@ -146,9 +146,9 @@ RUN \
     iproute2 && \
   echo "**** generate locale ****" && \
   locale-gen en_US.UTF-8 && \
-  echo "**** create rndeveloper user and make our folders ****" && \
-  useradd -u 911 -U -d /config -s /bin/false rndeveloper && \
-  usermod -G users rndeveloper && \
+  echo "**** create bunadmin user and make our folders ****" && \
+  useradd -u 911 -U -d /config -s /bin/false bunadmin && \
+  usermod -G users bunadmin && \
   mkdir -p \
     /app \
     /config \
@@ -265,17 +265,25 @@ RUN apt-get update -qq \
 # Install uv for python instead pip3 and pip
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# add local files
-COPY root/ /
+WORKDIR /app
+
+# COPY app/ /app
+COPY docker-entrypoint.sh /usr/local/bin/
 COPY scripts/ /scripts
 
 RUN \
+  mkdir -p /build \
+    /deployment \
+    /nodepath && \
   bun build /scripts/install_module.js --compile --outfile /usr/local/bin/helper && \
   chmod +x /usr/local/bin/helper && \
   rm -rf \
     /scripts/install_module.js
 
-# ports
-EXPOSE 3000-3001
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["/init"]
+EXPOSE 3000
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+
+

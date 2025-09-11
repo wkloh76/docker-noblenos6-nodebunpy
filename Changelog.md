@@ -15,12 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgrade bun.js version to 1.2.20 and nodejs version 20.19.4. Completed on 2025-08-11
 - Add tar package. Completed on 2025-08-15
+- Implement pure docker-entrypoint method manage service execution. Completed on 2025-09-11
 
 ### Changed
 
 ### Deprecated
 
 ### Removed
+
+- Remove s6-overlay code. Completed on 2025-09-11
 
 ### Fixed
 
