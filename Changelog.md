@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Remove s6 overlay from Dockerfile. Completed on 2025-10-03
+
 ### Fixed
 
 ### Security
