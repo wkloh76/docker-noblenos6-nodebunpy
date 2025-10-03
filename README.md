@@ -1,9 +1,9 @@
 # Docker Deploy Noble NodeBunPy
 
 ![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
-![Static Badge](https://img.shields.io/badge/NodeJS-V20_.19_.5-_)
-![Static Badge](https://img.shields.io/badge/BunJS-V1_.2_.21-_)
-![Static Badge](https://img.shields.io/badge/ElectronJS-V34_.2_.0-_)
+![Static Badge](https://img.shields.io/badge/NodeJS-V24_.9_.0-_)
+![Static Badge](https://img.shields.io/badge/BunJS-V1_.2_.23-_)
+![Static Badge](https://img.shields.io/badge/ElectronJS-V38_.2_.0-_)
 ![Static Badge](https://img.shields.io/badge/Python3-Latest-__?style=flat)
 ![Static Badge](https://img.shields.io/badge/OS-Ubunut_24.04-_?style=flat)
 
