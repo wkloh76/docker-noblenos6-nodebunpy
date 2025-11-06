@@ -57,13 +57,13 @@ if [ ! -d ${NMODULES} ] && [ -f ${PJSON} ]; then
       chown -R ${PUID}:${PGID} /app/node_modules
       echo "Install nodepath done!"
     else
-      cd /app &&  bun install --no-save --no-lockfile && chown -R ${PUID}:${PGID} node_modules
+      cd /app &&  bun install --linker hoisted --linker hoisted --no-save --no-lockfile && chown -R ${PUID}:${PGID} node_modules
     fi    
   else
     if $SYNO ; then
       helper --proc=install --dir="/app" --target="/app"
     else
-      cd /app &&  bun install --no-save --no-lockfile
+      cd /app &&  bun install --linker hoisted --linker hoisted --no-save --no-lockfile
     fi    
   fi
   echo "Install node_modules done!"
@@ -96,7 +96,7 @@ if [ ! -f "${PRJDIR}/${script}" ]; then
 fi
 
 set -e
-set -- "${RUNENGINE}" "${script}" "--user=${USER_NAME}" "--homedir=/home/${USER_NAME}" "--mode=${RUN_MODE}" "--engine=${RUN_ENGINE}"
+set -- "${RUNENGINE}" "${script}" "--user=${USER_NAME}" "--homedir=/home/${USER_NAME}" "--mode=${RUN_MODE}" "--engine=${RUN_ENGINE}" "--sudopwd=$USER_PASSWORD"
 
-echo "$@"
+# echo "$@"
 exec "$@"
