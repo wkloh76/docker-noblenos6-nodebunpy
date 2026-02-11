@@ -14,7 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Upgrade bun.js version to 1.2.23 and nodejs version 24.9.0. Completed on 2025-10-03
-- Upgrade bun.js version to 1.3.31 and nodejs version 24.11.0. Completed on 2025-11-05
+- Upgrade bun.js version to 1.3.1 and nodejs version 24.11.0. Completed on 2025-11-05
+- Upgrade bun.js version to 1.3.9 and nodejs version 24.13.1. Completed on 2026-02-11
+- Add `node-gyp prebuild-install electron-builder @electron/rebuild @electron/packager` modules to global to allow direct call from application. Completed on 2026-02-11
 
 ### Changed
 

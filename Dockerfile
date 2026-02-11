@@ -255,6 +255,8 @@ WORKDIR /app
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY scripts/ /scripts
 
+RUN npm install -g node-gyp prebuild-install electron-builder @electron/rebuild @electron/packager
+
 RUN \
   mkdir -p /build \
     /deployment \
