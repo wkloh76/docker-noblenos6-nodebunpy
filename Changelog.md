@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ~~Upgrade bun.js version to 1.3.9 and nodejs version 24.13.1. Completed on 2026-02-11~~
 - Add `node-gyp prebuild-install electron-builder @electron/rebuild @electron/packager` modules to global to allow direct call from application. Completed on 2026-02-11
 - Upgrade bun.js version to 1.3.14 and nodejs version 24.18.0. Completed on 2026-07-03
+- Add `lsiown` script instead downloand from linuxserver.io due to github not found issue. Completed on 2026-07-09
 
 ### Changed
 
