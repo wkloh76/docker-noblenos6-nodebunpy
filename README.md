@@ -1,8 +1,8 @@
 # Docker Deploy Noble NodeBunPy
 
 ![Static Badge](https://img.shields.io/badge/License-Mulan_PSL_v2-_)
-![Static Badge](https://img.shields.io/badge/NodeJS-V24_.18_.0-_)
-![Static Badge](https://img.shields.io/badge/BunJS-V1_.3_.14-_)
+![Static Badge](https://img.shields.io/badge/NodeJS-V24_.22_.1-_)
+![Static Badge](https://img.shields.io/badge/BunJS-V1_.4_.3-_)
 ![Static Badge](https://img.shields.io/badge/ElectronJS-V42_.4_.1-_)
 ![Static Badge](https://img.shields.io/badge/Python3-Latest-__?style=flat)
 ![Static Badge](https://img.shields.io/badge/OS-Ubunut_24.04-_?style=flat)
@@ -25,8 +25,8 @@ The primary framework supported is **OricommJS** / **OricommJS_v2**, which rende
 
 | Component  | Version        |
 |------------|----------------|
-| Node.js    | v24.18.0       |
-| Bun        | v1.3.14        |
+| Node.js    | v24.22.1       |
+| Bun        | v1.4.3         |
 | Electron   | v42.4.1        |
 | Python 3   | Latest         |
 | Base OS    | Ubuntu 24.04   |
@@ -51,8 +51,8 @@ docker compose up -d
 | Variable | Description                          | Example         |
 |----------|--------------------------------------|-----------------|
 | `IMG`    | Image name                           | `noblenos6-nodebunpy-deploy` |
-| `TAG`    | Node.js version                      | `24.18.0`       |
-| `ARG1`   | Bun version                          | `1.3.14`        |
+| `TAG`    | Node.js version                      | `24.22.1`       |
+| `ARG1`   | Bun version                          | `1.4.3`         |
 
 ### Runtime Environment Variables
 
@@ -134,9 +134,39 @@ Ensure your project has a `requirements.txt` file for Python package installatio
 - **Default scripts** — If no project code is mounted to `/app`, the container runs the default `app.js` or `app.py` from `/scripts/` based on `INTERPRETER`.
 - **Ubuntu base** — Required for `electron-builder` to produce `.deb` packages.
 
+## Security
+
+### CVE-2026-111497 — Node.js Brotli decoder out-of-bounds write (HIGH)
+
+Node.js **v24.22.1** (2026-10-21) is the security release that fixes CVE-2026-111497, an
+out-of-bounds write in Node.js core's Brotli decoder that permits remote code execution.
+The flaw affects the 26.x, 24.x and 22.x release lines; the fix for the 24.x line is
+v24.22.1, which is the version pinned in `.env.example` as `TAG`.
+
+The exposure is runtime-level rather than in this repo's own code — nothing here calls
+Brotli directly. The risk comes from the application mounted at `/app` and its
+dependencies: any path that feeds untrusted data to the decoder is a target, such as
+`zlib.brotliDecompress*` or an outbound `fetch`/HTTP request that negotiates
+`accept-encoding: br` and decompresses the response. A malicious or compromised upstream
+response can trigger the decoder and execute code inside the container, which runs as root.
+
+The patch lives in the Node.js binary, so an existing container built from the older
+`24.18.0` tag must be **rebuilt** — restarting it is not enough:
+
+```bash
+cp .env.example .env   # TAG=24.22.1, ARG1=1.4.3
+docker compose build
+docker compose up -d
+```
+
+Bun is not covered by this advisory (the advisory covers Node.js core), but Bun was
+bumped to v1.4.3 in the same change. Node v24.22.1 also carries the other October 2026
+security fixes and dependency updates (c-ares, ca-cert, OpenSSL, Undici).
+
 ## References
 
 - [LinuxServer.io](https://github.com/linuxserver) — Base image templates and Docker best practices
 - [FIGlet](https://labex.io/tutorials/linux-crafting-striking-terminal-text-with-figlet-272383) — Terminal banner generation
 - [SSH Warning Banner](https://www.tecmint.com/ssh-warning-banner-linux/) — Custom MOTD configuration
 - [Bash variable check](https://stackoverflow.com/questions/3601515/how-to-check-if-a-variable-is-set-in-bash)
+- [Node.js October 2026 Security Releases](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) — CVE-2026-111497 advisory and fixed release lines
